@@ -23,24 +23,24 @@ TPilaPersona menoresQueElResto(TPersonasLDE lista)
 bool sumaPares(nat k, TConjuntoIds c)
 {
 
-    bool aux[cantMaxTConjuntoIds(c) + 1];
+    /*bool aux[cantMaxTConjuntoIds(c) + 1];
 
     for (nat i = 1; i <= cantMaxTConjuntoIds(c); i++)
     {
         aux[i] = false;
-    }
+    }*/
 
     for (nat i = 1; i <= cantMaxTConjuntoIds(c); i++)
     {
 
         if (perteneceTConjuntoIds(i, c))
         {
-            if (k - i > 0 && k - i <= cantMaxTConjuntoIds(c) && aux[k - i])
+            if (k - i > i && perteneceTConjuntoIds(k - i , c))
             {
                 return true;
             }
 
-            aux[i] = true;
+            //aux[i] = true;
         }
     }
 
