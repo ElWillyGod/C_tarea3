@@ -323,7 +323,7 @@ TPilaPersona serializarTPersonasABB(TPersonasABB personasABB)
     TPilaPersona pila = crearTPilaPersona();
     TColaPersonasABB cola = crearTColaPersonasABB();
 
-    if (personasABB != NULL)
+    if (personasABB != NULL) // recorrida por niveles 
     {
 
         encolarEnTColaPersonasABB(personasABB, cola);
@@ -347,17 +347,17 @@ TPilaPersona serializarTPersonasABB(TPersonasABB personasABB)
         liberarTColaPersonasABB(cola);
     }
 
-    TPilaPersona pilaAux = crearTPilaPersona();
+    TPilaPersona pilInversa = crearTPilaPersona();
 
-    while (cantidadEnTPilaPersona(pila) > 0)
+    while (cantidadEnTPilaPersona(pila) > 0) // invertir la cola 
     {
-        apilarEnTPilaPersona(pilaAux, cimaDeTPilaPersona(pila));
+        apilarEnTPilaPersona(pilInversa, cimaDeTPilaPersona(pila));
         desapilarDeTPilaPersona(pila);
     }
 
     liberarTPilaPersona(pila);
 
-    return pilaAux;
+    return pilInversa;
 }
 
 TPersonasABB deserializarTPersonasABB(TPilaPersona &pilaPersonas)
