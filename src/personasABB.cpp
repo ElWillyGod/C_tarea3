@@ -323,7 +323,7 @@ TPilaPersona serializarTPersonasABB(TPersonasABB personasABB)
     TPilaPersona pila = crearTPilaPersona();
     TColaPersonasABB cola = crearTColaPersonasABB();
 
-    if (personasABB != NULL) // recorrida por niveles 
+    if (personasABB != NULL) // recorrida por niveles
     {
 
         encolarEnTColaPersonasABB(personasABB, cola);
@@ -349,7 +349,7 @@ TPilaPersona serializarTPersonasABB(TPersonasABB personasABB)
 
     TPilaPersona pilInversa = crearTPilaPersona();
 
-    while (cantidadEnTPilaPersona(pila) > 0) // invertir la cola 
+    while (cantidadEnTPilaPersona(pila) > 0) // invertir la cola
     {
         apilarEnTPilaPersona(pilInversa, cimaDeTPilaPersona(pila));
         desapilarDeTPilaPersona(pila);
@@ -363,18 +363,55 @@ TPilaPersona serializarTPersonasABB(TPersonasABB personasABB)
 TPersonasABB deserializarTPersonasABB(TPilaPersona &pilaPersonas)
 {
     TPersonasABB arbol = NULL;
+    TColaPersonasABB cola = crearTColaPersonasABB();
 
-    while (cantidadEnTPilaPersona(pilaPersonas) >= 1)
+    insertarTPersonasABB(arbol, copiarTPersona(cimaDeTPilaPersona(pilaPersonas)));
+
+    desapilarDeTPilaPersona(pilaPersonas);
+
+    encolarEnTColaPersonasABB(arbol, cola);
+
+    while (cantidadEnTPilaPersona(pilaPersonas) > 0)
+    {
+        TPersonasABB frente = frenteDeTColaPersonasABB(cola);
+
+        if (cantidadEnTPilaPersona(pilaPersonas) > 0)
+        {
+
+            insertarTPersonasABB(frente->left, copiarTPersona(cimaDeTPilaPersona(pilaPersonas)));
+
+            encolarEnTColaPersonasABB(frente->left, cola);
+            desapilarDeTPilaPersona(pilaPersonas);
+        }
+
+        if (cantidadEnTPilaPersona(pilaPersonas) > 0)
+        {
+
+            insertarTPersonasABB(frente->right, copiarTPersona(cimaDeTPilaPersona(pilaPersonas)));
+
+            encolarEnTColaPersonasABB(frente->right, cola);
+            desapilarDeTPilaPersona(pilaPersonas);
+
+            
+        }
+
+        desencolarDeTColaPersonasABB(cola);
+    }
+    liberarTPilaPersona(pilaPersonas);
+    liberarTColaPersonasABB(cola);
+
+
+    return arbol;
+}
+
+/* while (cantidadEnTPilaPersona(pilaPersonas) >= 1)
     {
 
         insertarTPersonasABB(arbol, copiarTPersona(cimaDeTPilaPersona(pilaPersonas)));
         desapilarDeTPilaPersona(pilaPersonas);
     }
 
-    liberarTPilaPersona(pilaPersonas);
-    return arbol;
-}
-
+    liberarTPilaPersona(pilaPersonas);*/
 ///////////////////////////////////////////////////////////////////////////
 /////////////  FIN NUEVAS FUNCIONES  //////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////
