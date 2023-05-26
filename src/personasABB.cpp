@@ -363,42 +363,41 @@ TPilaPersona serializarTPersonasABB(TPersonasABB personasABB)
 TPersonasABB deserializarTPersonasABB(TPilaPersona &pilaPersonas)
 {
     TPersonasABB arbol = NULL;
-    TColaPersonasABB cola = crearTColaPersonasABB();
+    TColaPersonasABB colaAux = crearTColaPersonasABB();
 
     insertarTPersonasABB(arbol, copiarTPersona(cimaDeTPilaPersona(pilaPersonas)));
-
     desapilarDeTPilaPersona(pilaPersonas);
 
-    encolarEnTColaPersonasABB(arbol, cola);
+    encolarEnTColaPersonasABB(arbol, colaAux);
 
     while (cantidadEnTPilaPersona(pilaPersonas) > 0)
     {
-        TPersonasABB frente = frenteDeTColaPersonasABB(cola);
+        TPersonasABB frenteDeCola = frenteDeTColaPersonasABB(colaAux);
 
         if (cantidadEnTPilaPersona(pilaPersonas) > 0)
         {
 
-            insertarTPersonasABB(frente->left, copiarTPersona(cimaDeTPilaPersona(pilaPersonas)));
+            insertarTPersonasABB(frenteDeCola->left, copiarTPersona(cimaDeTPilaPersona(pilaPersonas)));
 
-            encolarEnTColaPersonasABB(frente->left, cola);
+            encolarEnTColaPersonasABB(frenteDeCola->left,colaAux);
             desapilarDeTPilaPersona(pilaPersonas);
         }
 
         if (cantidadEnTPilaPersona(pilaPersonas) > 0)
         {
 
-            insertarTPersonasABB(frente->right, copiarTPersona(cimaDeTPilaPersona(pilaPersonas)));
+            insertarTPersonasABB(frenteDeCola->right, copiarTPersona(cimaDeTPilaPersona(pilaPersonas)));
 
-            encolarEnTColaPersonasABB(frente->right, cola);
+            encolarEnTColaPersonasABB(frenteDeCola->right,colaAux);
             desapilarDeTPilaPersona(pilaPersonas);
 
             
         }
 
-        desencolarDeTColaPersonasABB(cola);
+        desencolarDeTColaPersonasABB(colaAux);
     }
     liberarTPilaPersona(pilaPersonas);
-    liberarTColaPersonasABB(cola);
+    liberarTColaPersonasABB(colaAux);
 
 
     return arbol;
